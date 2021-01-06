@@ -2,6 +2,7 @@
   "name": "sortwar",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -11,11 +12,16 @@
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
+  "main": "src/electron-starter.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set BROWSER=none && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "nf": "nf start",
+    "dev": "set BROWSER=none && concurrently \"npm start\" \"node src/electron-wait-react\""
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "electron": "^11.1.1",
+    "foreman": "^3.0.1"
   }
 }
