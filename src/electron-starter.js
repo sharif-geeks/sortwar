@@ -12,7 +12,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       nodeintegration: true,
       enableRemoteModule: true,
-      webSecurity: false 
+      webSecurity: false
     },
   })
 
@@ -52,9 +52,6 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-const runExec = (cmd) => {
-  const child_process = require('child_process')
-  child_process.exec(cmd)
-}
+const { execFile } = require('child_process');
 
-exports.runExec = runExec
+exports = { execFile }

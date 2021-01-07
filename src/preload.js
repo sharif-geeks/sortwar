@@ -11,4 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
+window.ipcRenderer = require('electron').ipcRenderer;
 window.remote = require('electron').remote;
+window.childProcess = require('child_process')
