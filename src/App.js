@@ -25,7 +25,10 @@ export const callReferee = ({ author, lang, algo, count, type }) => ({
 
 function App() {
   const handleCallDataGen = useCallback(() => {
-    const { file, args } = callDataGen({ count: 10000000, type: "double" })
+    const { file, args } = callDataGen({
+      count: 10000000,
+      type: "integer"
+    })
 
     execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
@@ -36,10 +39,10 @@ function App() {
 
   const handleCallProgram = useCallback(() => {
     const { file, args } = callProgram({
-      author: authors.hayyaun,
-      lang: languages.python,
-      format: formats.py,
-      algo: algorithms.quick,
+      author: authors.arman,
+      lang: languages.go,
+      format: formats.exe,
+      algo: algorithms.default,
       count: 10000000,
       type: "integer"
     })
@@ -53,9 +56,9 @@ function App() {
 
   const handleCallReferee = useCallback(() => {
     const { file, args } = callReferee({
-      author: authors.hayyaun,
-      lang: languages.python,
-      algo: algorithms.quick,
+      author: authors.arman,
+      lang: languages.go,
+      algo: algorithms.default,
       count: 10000000,
       type: "integer"
     })

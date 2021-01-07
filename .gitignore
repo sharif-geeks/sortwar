@@ -10,6 +10,7 @@
 
 # production
 /build
+/sortwar-win32-x64
 
 # misc
 .DS_Store
