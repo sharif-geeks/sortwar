@@ -24,3 +24,4 @@ yarn-error.log*
 
 # numpy file
 *.npy
+!*.py
