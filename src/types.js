@@ -7,6 +7,8 @@ export const languages = {
 
 export const algorithms = {
   default: "default",
+  default1: "default1",
+  default2: "default2",
   bubble: "bubble",
   insertion: "insertion",
   heap: "heap",
