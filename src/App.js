@@ -20,7 +20,7 @@ export const callProgram = ({ author, lang, format, algo, count, type }) => {
 }
 
 export const callReferee = ({ author, lang, algo, count, type }) => ({
-  file: 'python', args: [`${author}\\${lang}-${algo}-${count}-${type}.npy`]
+  file: 'python', args: [`${wdir}\\outputs\\referee.py`, `${wdir}\\outputs\\${author}\\${lang}-${algo}-${count}-${type}.npy`]
 })
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
       author: authors.hayyaun,
       lang: languages.python,
       format: formats.py,
-      algo: algorithms.default,
+      algo: algorithms.quick,
       count: 10000000,
       type: "integer"
     })
@@ -55,7 +55,7 @@ function App() {
     const { file, args } = callReferee({
       author: authors.hayyaun,
       lang: languages.python,
-      algo: algorithms.default,
+      algo: algorithms.quick,
       count: 10000000,
       type: "integer"
     })

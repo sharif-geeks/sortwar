@@ -3,11 +3,6 @@ import string
 import numpy as np
 import time
 
-
-def defaultSort(arr): 
-  return np.sort(arr)
-
-
 ## MERGE_SORT
 def mergeSort(arr):
   if len(arr) > 1:
@@ -51,7 +46,7 @@ def partition(arr,low,high):
     pivot = arr[high]     # pivot 
   
     for j in range(low , high): 
-  
+
         # If current element is smaller than the pivot 
         if   arr[j] < pivot: 
           
@@ -74,6 +69,45 @@ def quickSort(arr,low,high):
         quickSort(arr, low, pi-1) 
         quickSort(arr, pi+1, high) 
 
+
+# HEAP SORT
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+ 
+    # See if left child of root exists and is
+    # greater than root
+    if l < n and arr[largest] < arr[l]:
+        largest = l
+ 
+    # See if right child of root exists and is
+    # greater than root
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+ 
+    # Change root, if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+ 
+        # Heapify the root.
+        heapify(arr, n, largest)
+
+
+def heapSort(arr):
+    n = len(arr)
+ 
+    # Build a maxheap.
+    for i in range(n//2 - 1, -1, -1):
+        heapify(arr, n, i)
+ 
+    # One by one extract elements
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+
+
+# MAIN FUNCTION
 if __name__ == "__main__":
   algo = sys.argv[1]
   count = int(sys.argv[2])
@@ -84,15 +118,18 @@ if __name__ == "__main__":
   data = np.load(inFile)
 
   def saveAndCalcTime(func):
-    start_time = time.time()
-    sorted = np.array(func(data))
-    print(int((time.time() - start_time) * 1000))
-    np.save(outFile, sorted)
+    arr = data.tolist()
+    start_time = time.time() # start time
+    sorted = func(data if algo == "default" else arr)
+    print(int((time.time() - start_time) * 1000)) # end time
+    np.save(outFile, sorted if algo == "default" else np.array(arr))
 
   if(algo == "default"):
-    saveAndCalcTime(defaultSort)
+    saveAndCalcTime(lambda arr: np.sort(arr))
   elif(algo == "merge"):
     saveAndCalcTime(mergeSort)
   elif(algo == "quick"):
     saveAndCalcTime(lambda arr: quickSort(arr, 0, len(arr) - 1))
+  elif(algo == "heap"):
+    saveAndCalcTime(heapSort)
 
