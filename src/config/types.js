@@ -1,8 +1,19 @@
+export const sortRanges = [
+  10, 100, 1000, 10000, 100000, 1000000, 10000000
+]
+
+export const dataTypes = {
+  integer: "integer",
+  double: "double",
+  string: "string"
+}
+
 export const languages = {
   cpp: "cpp",
   go: "go",
   python: "python",
-  rust: "rust"
+  rust: "rust",
+  csharp: "csharp"
 }
 
 export const algorithms = {
