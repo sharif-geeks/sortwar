@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Actionbar from "../comps/Actionbar";
 import Graph from "../comps/Graph/Graph";
-import Overview from "../comps/Overview/Overview";
-import Selectors from "../comps/Selectors/Selectors";
+import Overview from "../comps/Overview";
+import Selectors from "../comps/Selectors";
 
 function Home() {
   return (

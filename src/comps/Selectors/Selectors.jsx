@@ -1,5 +1,10 @@
-import { FormControl, InputLabel, makeStyles, Select } from "@material-ui/core";
-import { MenuItem } from "electron";
+import {
+  FormControl,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -27,8 +32,6 @@ function Selectors() {
   const algo = useRecoilState(algoAtom);
   const count = useRecoilState(countAtom);
 
-  const classes = useStyles();
-
   const selects = [
     { title: "Author", state: author, items: authors },
     { title: "Language", state: lang, items: languages },
@@ -42,10 +45,16 @@ function Selectors() {
     { title: "Mode", state: mode, items: modes },
   ];
 
+  const classes = useStyles();
+
   return (
     <Container>
       {selects.map(({ title, state: [value, setter], items }, i) => (
-        <FormControl variant="outlined" className={classes.formControl} key={i}>
+        <FormControl
+          variant="outlined"
+          className={classes.formControl}
+          key={"form-" + i}
+        >
           <InputLabel id="demo-simple-select-outlined-label">
             {title}
           </InputLabel>
@@ -57,7 +66,7 @@ function Selectors() {
             label="Age"
           >
             {Object.keys(items).map((key, i) => (
-              <MenuItem value={items[key]} key={i}>
+              <MenuItem value={items[key]} key={"item-" + i}>
                 {key}
               </MenuItem>
             ))}
@@ -72,6 +81,7 @@ export default Selectors;
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
+    flex: 1,
     margin: theme.spacing(1),
     minWidth: 120,
   },
@@ -80,4 +90,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+  display: flex;
+`;

@@ -7,9 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import { useMemo } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { wdir } from "../../config/vars";
@@ -24,7 +22,7 @@ function Overview() {
   const [author] = useRecoilState(authorAtom);
 
   useEffect(() => {
-    const execTimesInit = window.fs?.readFileSync(
+    const execTimesInit = window.fs.readFileSync(
       `${wdir}\\outputs\\${author}\\exec-times.json`
     );
     _execTimes.current = JSON.parse(execTimesInit);
@@ -83,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     position: "relative",
     overflow: "hidden",
-    overflowX: "auto"
+    overflowX: "auto",
   },
 }));
 

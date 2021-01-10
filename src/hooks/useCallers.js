@@ -46,7 +46,7 @@ export default function useCallers() {
         console.log(`stdout: ${stdout || "done!"}`);
 
         // save calc exec time
-        const execTimesInit = window.fs?.readFileSync(
+        const execTimesInit = window.fs.readFileSync(
           `${wdir}\\outputs\\${author}\\exec-times.json`
         );
         const execTimesObj = JSON.parse(execTimesInit);
