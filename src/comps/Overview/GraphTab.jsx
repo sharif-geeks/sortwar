@@ -28,7 +28,7 @@ function GraphTab({ data: allData }) {
           (datum) =>
             datum.type === type && datum.lang === lang && datum.algo === algo
         )
-        .sort((a, b) => a.time < b.time),
+        .sort((a, b) => a.time - b.time),
     [algo, allData, lang, type]
   );
 
@@ -56,7 +56,7 @@ export default GraphTab;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   flex: 1;
   height: 100%;

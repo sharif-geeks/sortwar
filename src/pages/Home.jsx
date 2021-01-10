@@ -21,4 +21,5 @@ const Container = styled.div`
   position: relative;
   flex-direction: column;
   overflow: hidden;
+  -webkit-app-region: no-drag;
 `;

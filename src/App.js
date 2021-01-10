@@ -11,8 +11,8 @@ const theme = createMuiTheme({
   },
   palette: {
     type: "dark",
-    primary: { main: "#b0cac7" },
-    secondary: { main: "#b8de6f" }
+    primary: { main: "#8884d8" },
+    secondary: { main: "#439d93" }
   },
   overrides: {
     MuiButton: {
@@ -30,7 +30,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <Container>
           <Appbar />
-          <Home /></Container>
+          <Home />
+        </Container>
         <CustomSnackbar />
       </ThemeProvider>
     </RecoilRoot>

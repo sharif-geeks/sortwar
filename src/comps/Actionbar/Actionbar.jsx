@@ -25,7 +25,7 @@ function Actionbar() {
         <Button
           onClick={handleCallDataGen}
           startIcon={<PlaylistAddIcon />}
-          style={{ backgroundColor: "#d9adad" }}
+          style={{ backgroundColor: "#d18080" }}
         >
           Make Random Data
         </Button>
@@ -34,14 +34,13 @@ function Actionbar() {
           color="secondary"
           fullWidth
           startIcon={<PlaylistPlayIcon />}
-          style={{ backgroundColor: "#84a9ac" }}
         >
           Sort Data
         </Button>
         <Button
           onClick={handleCallReferee}
           startIcon={<PlaylistAddCheckIcon />}
-          style={{ backgroundColor: "#89c9b8" }}
+          style={{ backgroundColor: "#32b894" }}
         >
           Check Correct
         </Button>
