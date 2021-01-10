@@ -1,6 +1,6 @@
 import { algorithms, authors, formats, languages, threads } from "./types"
 
-export const wdir = ".\\public\\programs"
+export const wdir = ".\\programs"
 
 export const programs = [
   {

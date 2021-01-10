@@ -1,3 +1,8 @@
+export const modes = {
+  normal: "normal",
+  shuffle: "shuffle"
+}
+
 export const sortRanges = [
   10, 100, 1000, 10000, 100000, 1000000, 10000000
 ]
@@ -13,13 +18,11 @@ export const languages = {
   go: "go",
   python: "python",
   rust: "rust",
-  csharp: "csharp"
+  cs: "cs"
 }
 
 export const algorithms = {
   default: "default",
-  default1: "default1",
-  default2: "default2",
   bubble: "bubble",
   insertion: "insertion",
   heap: "heap",
@@ -37,7 +40,7 @@ export const formats = {
   py: "py"
 }
 
-export const threads = {
-  single: "single",
-  multi: "multi"
-}
+// export const threads = {
+//   single: "single",
+//   multi: "multi"
+// }
