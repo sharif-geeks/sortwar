@@ -11,26 +11,22 @@ if __name__ == "__main__":
     outDir = sys.argv[3]
 
     data = None
+    arr = []
     if(type == "integer"):
-        arr = []
         sub = 2**33
         base = sub * 2
         for i in range(count):
             num = int(rnd.random() * base - sub)
             arr.append(num)
         data = np.asarray(arr)
-
     elif(type == "double"):
-        arr = []
         sub = 5 * 10**(-345)
         base = sub * 2
         for i in range(count):
             num = float(rnd.random() * base - sub)
             arr.append(num)
         data = np.asarray(arr)
-
     elif(type == "string"):
-        arr = []
         scope = string.ascii_letters
         for i in range(count):
             size = int(rnd.random() * 80 + 1)
@@ -38,4 +34,4 @@ if __name__ == "__main__":
             arr.append(rndstr.encode('utf-8'))
         data = np.array(arr)
 
-    np.save(outDir + str(count) + '-' + type + '.npy', data)
+    np.save(outDir + '\\' + str(count) + '-' + type + '.npy', data)

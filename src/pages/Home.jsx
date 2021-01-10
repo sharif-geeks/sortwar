@@ -1,13 +1,24 @@
+import styled from "styled-components";
 import Actionbar from "../comps/Actionbar";
+import Graph from "../comps/Graph/Graph";
+import Overview from "../comps/Overview/Overview";
 import Selectors from "../comps/Selectors/Selectors";
 
 function Home() {
   return (
-    <div>
+    <Container>
       <Selectors />
+      <Graph />
+      <Overview />
       <Actionbar />
-    </div>
+    </Container>
   );
 }
 
 export default Home;
+
+const Container = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+`;

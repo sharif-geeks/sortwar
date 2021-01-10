@@ -26,3 +26,7 @@ yarn-error.log*
 # numpy file
 *.npy
 !*.py
+
+# cache files
+.dev
+.temp

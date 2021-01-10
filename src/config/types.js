@@ -40,7 +40,7 @@ export const formats = {
   py: "py"
 }
 
-// export const threads = {
-//   single: "single",
-//   multi: "multi"
-// }
+export const threads = {
+  single: "single",
+  multi: "multi"
+}

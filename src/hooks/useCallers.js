@@ -15,12 +15,12 @@ import {
 const { execFile } = window.childProcess;
 
 export default function useCallers() {
-  const [mode, setMode] = useRecoilState(modeAtom);
-  const [author, setAuthor] = useRecoilState(authorAtom);
-  const [type, setType] = useRecoilState(typeAtom)
-  const [lang, setLang] = useRecoilState(langAtom);
-  const [algo, setAlgo] = useRecoilState(algoAtom);
-  const [count, setCount] = useRecoilState(countAtom);
+  const [mode] = useRecoilState(modeAtom);
+  const [author] = useRecoilState(authorAtom);
+  const [type] = useRecoilState(typeAtom)
+  const [lang] = useRecoilState(langAtom);
+  const [algo] = useRecoilState(algoAtom);
+  const [count] = useRecoilState(countAtom);
   const format = useMemo(
     () => (lang === languages.python ? formats.py : formats.exe),
     [lang]
@@ -46,7 +46,7 @@ export default function useCallers() {
         console.log(`stdout: ${stdout || "done!"}`);
 
         // save calc exec time
-        const execTimesInit = window.fs.readFileSync(
+        const execTimesInit = window.fs?.readFileSync(
           `${wdir}\\outputs\\${author}\\exec-times.json`
         );
         const execTimesObj = JSON.parse(execTimesInit);
