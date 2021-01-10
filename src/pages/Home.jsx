@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Actionbar from "../comps/Actionbar";
-import Graph from "../comps/Graph/Graph";
 import Overview from "../comps/Overview";
 import Selectors from "../comps/Selectors";
 
@@ -8,9 +7,8 @@ function Home() {
   return (
     <Container>
       <Selectors />
-      <Graph />
-      <Overview />
       <Actionbar />
+      <Overview />
     </Container>
   );
 }
@@ -18,7 +16,9 @@ function Home() {
 export default Home;
 
 const Container = styled.div`
+  flex: 1;
   display: flex;
   position: relative;
   flex-direction: column;
+  overflow: hidden;
 `;

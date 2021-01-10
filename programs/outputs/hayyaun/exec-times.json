@@ -1,6 +1,1 @@
-{
-  "python-default-10000000-integer": 50000,
-  "python-heap-10000000-integer": 150000,
-  "python-merge-10000000-integer": 120000,
-  "python-quick-10000000-integer": 100000
-}
+{"python-heap-10-integer":0,"python-heap-100-integer":0,"python-heap-1000000-integer":11517,"python-heap-10000000-integer":178059,"python-quick-10-integer":0,"python-quick-100-integer":0,"python-quick-1000-integer":2,"python-heap-1000-integer":8,"cs-heap-10-integer":0,"cs-heap-1000000-integer":347}

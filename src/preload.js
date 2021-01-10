@@ -15,3 +15,4 @@ window.electron = require('electron')
 window.childProcess = require('child_process')
 window.pidusage = require('pidusage')
 window.fs = require('fs');
+window.dirname = __dirname;

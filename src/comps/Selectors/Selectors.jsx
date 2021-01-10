@@ -15,6 +15,7 @@ import {
   modes,
   sortRanges,
 } from "../../config/types";
+import { authorHasLangs } from "../../config/vars";
 import {
   algoAtom,
   authorAtom,
@@ -34,13 +35,9 @@ function Selectors() {
 
   const selects = [
     { title: "Author", state: author, items: authors },
-    { title: "Language", state: lang, items: languages },
+    { title: "Language", state: lang, items: authorHasLangs.hayyaun },
     { title: "Algorithm", state: algo, items: algorithms },
-    {
-      title: "Count",
-      state: count,
-      items: sortRanges.map((r) => ({ [r]: r })),
-    },
+    { title: "Count", state: count, items: sortRanges },
     { title: "Data Type", state: type, items: dataTypes },
     { title: "Mode", state: mode, items: modes },
   ];
@@ -65,11 +62,17 @@ function Selectors() {
             onChange={(e) => setter(e.target.value)}
             label="Age"
           >
-            {Object.keys(items).map((key, i) => (
-              <MenuItem value={items[key]} key={"item-" + i}>
-                {key}
-              </MenuItem>
-            ))}
+            {Array.isArray(items)
+              ? items.map((item, i) => (
+                  <MenuItem value={item} key={"item-" + i}>
+                    {item}
+                  </MenuItem>
+                ))
+              : Object.keys(items).map((key, i) => (
+                  <MenuItem value={items[key]} key={"item-" + i}>
+                    {items[key]}
+                  </MenuItem>
+                ))}
           </Select>
         </FormControl>
       ))}
@@ -82,15 +85,14 @@ export default Selectors;
 const useStyles = makeStyles((theme) => ({
   formControl: {
     flex: 1,
-    margin: theme.spacing(1),
+    margin: 12,
     minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
 }));
 
 const Container = styled.div`
   position: relative;
   display: flex;
+  padding-top: 8px;
+  box-sizing: border-box;
 `;

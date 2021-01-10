@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from "react";
-import { useRecoilState } from "recoil";
+import { useCallback, useMemo, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { callDataGen, callProgram, callReferee } from "../config/functions";
 import { authors, formats, languages } from "../config/types";
 import { wdir } from "../config/vars";
@@ -7,8 +7,10 @@ import {
   algoAtom,
   authorAtom,
   countAtom,
+  execTimesAtom,
   langAtom,
   modeAtom,
+  snackbarAtom,
   typeAtom
 } from "../recoil/atoms";
 
@@ -26,37 +28,58 @@ export default function useCallers() {
     [lang]
   );
 
+  const setExecTimes = useSetRecoilState(execTimesAtom)
+  const setSnackbar = useSetRecoilState(snackbarAtom)
+  const [busy, setBusy] = useState(false)
+
   const handleCallDataGen = useCallback(() => {
+    setBusy(true)
     const { file, args } = callDataGen({ count, type, mode });
 
     execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
       if (stderr) console.error(`stderr: ${stderr}`);
       console.log(`stdout: ${stdout || "done!"}`);
+
+      if (!error) {
+        setSnackbar({ message: "Data generated successfully!", severity: "success" })
+      } else {
+        setSnackbar({ message: "Something went wrong!", severity: "error" })
+      }
+      setBusy(false)
     });
-  }, [count, mode, type]);
+  }, [count, mode, setSnackbar, type]);
 
   const handleCallProgram = useCallback(() => {
+    setBusy(true)
     const { file, args } = callProgram({ author, lang, format, algo, count, type });
 
     const child = execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
       if (stderr) console.error(`stderr: ${stderr}`);
-      if (stdout) {
-        console.log(`stdout: ${stdout || "done!"}`);
+      console.log(`stdout: ${stdout || "done!"}`);
 
+      if (stdout) {
         // save calc exec time
         const execTimesInit = window.fs.readFileSync(
           `${wdir}\\outputs\\${author}\\exec-times.json`
         );
         const execTimesObj = JSON.parse(execTimesInit);
-        execTimesObj[`${languages.cs}-${algo}-${count}-${type}`] = parseInt(stdout);
+        execTimesObj[`${lang}-${algo}-${count}-${type}`] = parseInt(stdout);
+        setExecTimes(execTimesObj)
         const execTimesNew = JSON.stringify(execTimesObj);
         window.fs.writeFileSync(
           `${wdir}\\outputs\\${authors.hayyaun}\\exec-times.json`,
           execTimesNew
         );
       }
+
+      if (!error) {
+        setSnackbar({ message: `Data sorted successfully in ${stdout}ms!`, severity: "success" })
+      } else {
+        setSnackbar({ message: "Something went wrong while sorting!", severity: "error" })
+      }
+      setBusy(false)
     });
 
     const getChildStats = () =>
@@ -70,17 +93,27 @@ export default function useCallers() {
       console.log("EXITED", child.pid);
       clearInterval(statsInterval);
     });
-  }, [algo, author, count, format, lang, type]);
+  }, [algo, author, count, format, lang, setExecTimes, setSnackbar, type]);
 
   const handleCallReferee = useCallback(() => {
+    setBusy(true)
     const { file, args } = callReferee({ author, lang, algo, count, type });
 
     execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
       if (stderr) console.error(`stderr: ${stderr}`);
       console.log(`stdout: ${stdout || "done!"}`);
-    });
-  }, [algo, author, count, lang, type]);
 
-  return { handleCallDataGen, handleCallProgram, handleCallReferee }
+      if (!error) {
+        if (String(stdout).includes("True")) setSnackbar({ message: "Data is sorted correctly!", severity: "success" })
+        else setSnackbar({ message: "Data is sorted with errors!", severity: "warning" })
+      } else {
+        setSnackbar({ message: "Something went wrong!", severity: "error" })
+      }
+
+      setBusy(false)
+    });
+  }, [algo, author, count, lang, setSnackbar, type]);
+
+  return { handleCallDataGen, handleCallProgram, handleCallReferee, busy }
 }

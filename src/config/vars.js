@@ -1,6 +1,8 @@
 import { algorithms, authors, formats, languages, threads } from "./types"
 
-export const wdir = ".\\programs"
+const app = window.electron.remote.app;
+export const wdir = `${app.getAppPath()}\\programs`
+console.log(wdir)
 
 export const programs = [
   {
@@ -12,3 +14,8 @@ export const programs = [
     name: "Merge Sort (Python)"
   }
 ]
+
+export const authorHasLangs = {
+  hayyaun: [languages.python, languages.cs],
+  arman: [languages.go]
+}

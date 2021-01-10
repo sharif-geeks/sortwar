@@ -1,35 +1,33 @@
-import {
-  makeStyles,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
-import { useEffect, useMemo, useRef } from "react";
+import { makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
+import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { wdir } from "../../config/vars";
-import { authorAtom } from "../../recoil/atoms";
+import { authorAtom, execTimesAtom } from "../../recoil/atoms";
+import GraphTab from "./GraphTab";
+import PerformanceTab from "./PerformanceTab";
+import TableTab from "./TableTab";
+
+const tabPanels = [TableTab, GraphTab, PerformanceTab];
 
 function createData(lang, algo, count, type, time) {
   return { lang, algo, count, type, time };
 }
 
 function Overview() {
-  const _execTimes = useRef({});
+  const [value, setValue] = useState(0);
+  const [execTimes, setExecTimes] = useRecoilState(execTimesAtom);
   const [author] = useRecoilState(authorAtom);
 
   useEffect(() => {
     const execTimesInit = window.fs.readFileSync(
       `${wdir}\\outputs\\${author}\\exec-times.json`
     );
-    _execTimes.current = JSON.parse(execTimesInit);
-  }, [author]);
+    setExecTimes(JSON.parse(execTimesInit));
+  }, [author, setExecTimes]);
 
-  const execTimes = _execTimes.current;
-  const rows = useMemo(
+  const data = useMemo(
     () =>
       Object.keys(execTimes).map((key) =>
         createData(...key.split("-"), execTimes[key])
@@ -38,34 +36,30 @@ function Overview() {
   );
 
   const classes = useStyles();
+  const TabPanel = tabPanels[value];
+
+  const handleChange = (e, v) => {
+    setValue(v);
+  };
 
   return (
     <Container>
       <Paper className={classes.paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Language</TableCell>
-              <TableCell align="right">Algorithm</TableCell>
-              <TableCell align="right">Count&nbsp;(normal)</TableCell>
-              <TableCell align="right">Data Type</TableCell>
-              <TableCell align="right">Execution Time&nbsp;(ms)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, i) => (
-              <TableRow key={i}>
-                <TableCell component="th" scope="row">
-                  {row.lang}
-                </TableCell>
-                <TableCell align="right">{row.algo}</TableCell>
-                <TableCell align="right">{row.count}</TableCell>
-                <TableCell align="right">{row.type}</TableCell>
-                <TableCell align="right">{row.time}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+          className={classes.tabs}
+        >
+          <Tab label="Table" />
+          <Tab label="Graph" />
+          <Tab label="Performance" />
+        </Tabs>
+        <Panel>
+          <TabPanel data={data} />
+        </Panel>
       </Paper>
     </Container>
   );
@@ -74,21 +68,33 @@ function Overview() {
 export default Overview;
 
 const useStyles = makeStyles((theme) => ({
+  tabs: { backgroundColor: "#121212" },
   paper: {
-    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    boxSizing: "border-box",
     position: "relative",
+    display: "flex",
+    flexDirection: "column",
     overflow: "hidden",
-    overflowX: "auto",
+    height: "100%",
   },
 }));
 
-const Container = styled.div`
+const Panel = styled.div`
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
   padding: 12px;
   box-sizing: border-box;
   position: relative;
+`;
+
+const Container = styled.div`
+  flex: 1;
+  padding: 12px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 
   td,
   th {
