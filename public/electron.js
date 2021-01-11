@@ -14,7 +14,7 @@ function createWindow() {
       nodeintegration: true,
       enableRemoteModule: true,
       webSecurity: false,
-      //devTools: isDev
+      devTools: isDev
     },
     darkTheme: true,
     titleBarStyle: "hidden",
