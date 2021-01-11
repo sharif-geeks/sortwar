@@ -14,7 +14,7 @@ function createWindow() {
       nodeintegration: true,
       enableRemoteModule: true,
       webSecurity: false,
-      devTools: isDev
+      //devTools: isDev
     },
     darkTheme: true,
     titleBarStyle: "hidden",
@@ -58,5 +58,5 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 if (!isDev) {
-  //Menu.setApplicationMenu(null);
+  Menu.setApplicationMenu(null);
 }

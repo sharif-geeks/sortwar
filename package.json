@@ -17,10 +17,11 @@
     "files": [
       "build/**/*",
       "programs/**/*",
-      "node_modules/**/*",
+      "!**/node_modules/*",
       "public/electron.js",
       "public/preload.js"
     ],
+    "asar": false,
     "directories": {
       "buildResources": "assets"
     }
