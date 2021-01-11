@@ -3,7 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
-  "productName": "sortwar",
+  "productName": "SortWar",
+  "description": "Sort war between languages",
+  "author": {
+    "name": "hayyaun",
+    "email": "hayyaun@outlook.com",
+    "url": "https://github.com/hayyaun"
+  },
+  "main": "src/electron-starter.js",
+  "build": {
+    "appId": "com.sharifgeeks.sortwar"
+  },
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "start:react": "set BROWSER=none && node scripts/start.js",
+    "build:react": "node scripts/build.js",
+    "test:react": "node scripts/test.js",
+    "electron": "electron .",
+    "start:electron": "node src/electron-wait-react",
+    "build:electron": "electron-packager . --overwrite --out=dist",
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "start": "concurrently \"npm run start:react\" \"npm run start:electron\"",
+    "build": "set ELECTRON_ENV=production && npm run build:react && npm run build:electron",
+    "build-winstaller": "node scripts/build-winstaller.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
     "@material-ui/core": "^4.11.2",
@@ -28,6 +53,7 @@
     "custom-electron-titlebar": "^3.2.5",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
+    "electron-is-dev": "^1.2.0",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -78,19 +104,6 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
   },
-  "main": "src/electron-starter.js",
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build:react": "node scripts/build.js",
-    "test:react": "node scripts/test.js",
-    "eject:react": "node scripts/eject.js",
-    "electron": "electron .",
-    "electron:dev": "node src/electron-wait-react",
-    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
-    "nf": "nf start",
-    "dev": "set BROWSER=none && concurrently \"npm start\" \"npm run electron:dev\"",
-    "build": "electron-packager . --overwrite"
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -112,10 +125,13 @@
   "devDependencies": {
     "babel-plugin-root-import": "^6.6.0",
     "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
     "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
     "electron-packager": "^15.2.0",
     "electron-winstaller": "^4.0.1",
-    "foreman": "^3.0.1"
+    "foreman": "^3.0.1",
+    "wait-on": "^5.2.1"
   },
   "jest": {
     "roots": [

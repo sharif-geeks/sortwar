@@ -17,7 +17,7 @@ export default function CustomSnackbar() {
 
   return (
     <Portal>
-      <Snackbar open={message} autoHideDuration={2000} onClose={handleClose}>
+      <Snackbar open={!!message} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity || "info"}>
           {message}
         </Alert>

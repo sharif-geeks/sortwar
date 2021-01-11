@@ -10,7 +10,7 @@
 
 # production
 /build
-/sortwar-win32-x64
+/tmp
 
 # misc
 .DS_Store
@@ -28,5 +28,6 @@ yarn-error.log*
 !*.py
 
 # cache files
-.dev
-.temp
+/.vscode
+/.temp
+/dist
