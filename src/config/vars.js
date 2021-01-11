@@ -1,7 +1,7 @@
 import { algorithms, authors, formats, languages, threads } from "./types"
 
 const app = window.electron.remote.app;
-export const wdir = `${app.getAppPath()}\\programs`
+export const wdir = `${app.getAppPath()}\\${process.env.NODE_ENV === "production" ? "programs" : "programs-dev"}`
 console.log(wdir)
 
 export const programs = [
