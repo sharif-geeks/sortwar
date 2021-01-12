@@ -1,79 +1,46 @@
-import {
-  makeStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@material-ui/core";
-import { useState } from "react";
+import { DataGrid } from "@material-ui/data-grid";
+import styled from "styled-components";
+import { colors } from "../../config/vars";
 
-function TableTab({ data: rows }) {
-  const [key, setKey] = useState("count");
+const cols = [
+  { field: "lang", headerName: "Language", width: 130 },
+  { field: "algo", headerName: "Algorithm", width: 130 },
+  {
+    field: "count",
+    headerName: "Count",
+    width: 180,
+    valueFormatter: ({ value: v }) => parseInt(v).toLocaleString(),
+  },
+  { field: "type", headerName: "Data Type", width: 130 },
+  {
+    field: "time",
+    headerName: "Execution Time (ms)",
+    align: "right",
+    headerAlign: "right",
+    flex: 1,
+    valueFormatter: ({ value: v }) => v.toLocaleString(),
+  },
+];
 
-  const classes = useStyles();
-
+function TableTab({ data }) {
+  const rows = data.map((datum, i) => ({ ...datum, id: i }));
   return (
-    <Table aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell className={classes.hcell} onClick={() => setKey("lang")}>
-            Language
-          </TableCell>
-          <TableCell
-            className={classes.hcell}
-            onClick={() => setKey("algo")}
-            align="right"
-          >
-            Algorithm
-          </TableCell>
-          <TableCell
-            className={classes.hcell}
-            onClick={() => setKey("count")}
-            align="right"
-          >
-            Count&nbsp;(normal)
-          </TableCell>
-          <TableCell
-            className={classes.hcell}
-            onClick={() => setKey("type")}
-            align="right"
-          >
-            Data Type
-          </TableCell>
-          <TableCell
-            className={classes.hcell}
-            onClick={() => setKey("time")}
-            align="right"
-          >
-            Execution Time&nbsp;(ms)
-          </TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {rows
-          .sort((row1, row2) => row1[key] > row2[key])
-          .map((row, i) => (
-            <TableRow key={i}>
-              <TableCell component="th" scope="row">
-                {row.lang}
-              </TableCell>
-              <TableCell align="right">{row.algo}</TableCell>
-              <TableCell align="right">{row.count}</TableCell>
-              <TableCell align="right">{row.type}</TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-            </TableRow>
-          ))}
-      </TableBody>
-    </Table>
+    <StyledDataGrid
+      rows={rows}
+      columns={cols}
+      //pageSize={6}
+      pagination={false}
+      hideFooterPagination
+    />
   );
 }
 
 export default TableTab;
 
-const useStyles = makeStyles((theme) => ({
-  hcell: {
-    cursor: "pointer",
-    color: theme.palette.primary.main,
-  },
-}));
+const StyledDataGrid = styled(DataGrid)`
+  && {
+    .MuiDataGrid-colCellTitle {
+      color: ${colors.primary.main};
+    }
+  }
+`;

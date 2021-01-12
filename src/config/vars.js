@@ -19,3 +19,8 @@ export const authorHasLangs = {
   hayyaun: [languages.python, languages.cs],
   arman: [languages.go]
 }
+
+export const colors = {
+  primary: { main: "#8884d8" },
+  secondary: { main: "#439d93" }
+}

@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CustomSnackbar from './comps/CustomSnackbar'
 import Appbar from "./comps/Appbar/Appbar";
 import styled from "styled-components";
+import { colors } from "./config/vars";
 
 const theme = createMuiTheme({
   typography: {
@@ -11,8 +12,8 @@ const theme = createMuiTheme({
   },
   palette: {
     type: "dark",
-    primary: { main: "#8884d8" },
-    secondary: { main: "#439d93" }
+    primary: colors.primary,
+    secondary: colors.secondary
   },
   overrides: {
     MuiButton: {

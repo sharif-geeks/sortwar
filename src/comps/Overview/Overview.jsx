@@ -6,10 +6,10 @@ import styled from "styled-components";
 import { wdir } from "../../config/vars";
 import { authorAtom, execTimesAtom } from "../../recoil/atoms";
 import GraphTab from "./GraphTab";
-import PerformanceTab from "./PerformanceTab";
+import SourceTab from "./SourceTab";
 import TableTab from "./TableTab";
 
-const tabPanels = [TableTab, GraphTab, PerformanceTab];
+const tabPanels = [TableTab, GraphTab, SourceTab];
 
 function createData(lang, algo, count, type, time) {
   return { lang, algo, count, type, time };
@@ -55,7 +55,7 @@ function Overview() {
         >
           <Tab label="Table" />
           <Tab label="Graph" />
-          <Tab label="Performance" />
+          <Tab label="Source" />
         </Tabs>
         <Panel>
           <TabPanel data={data} />

@@ -3,12 +3,15 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
+import "react-icons/vsc";
+import {
+  VscChromeClose,
+  VscChromeMaximize,
+  VscChromeMinimize,
+  VscGithubAlt,
+} from "react-icons/vsc";
 import styled from "styled-components";
-import CloseIcon from "@material-ui/icons/Close";
-import MinimizeIcon from "@material-ui/icons/Minimize";
-import Crop54Icon from "@material-ui/icons/Crop54";
 
 const { remote } = window.electron;
 var win = remote.BrowserWindow.getFocusedWindow();
@@ -17,14 +20,22 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 0,
   },
+  appbar: {},
+  toolbar: {
+    alignItems: "center",
+    padding: "0 4px",
+  },
   menuButton: {
     "-webkit-app-region": "no-drag",
     color: "#dddd",
+    display: "flex",
+    margin: "0 2px",
     "&:hover": {
       color: "#dddf",
     },
   },
   title: {
+    margin: 0,
     marginLeft: theme.spacing(2),
   },
 }));
@@ -34,17 +45,26 @@ export default function Appbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
+      <AppBar position="static" className={classes.appbar}>
+        <Toolbar variant="dense" className={classes.toolbar}>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={() =>
+              window.electron.shell.openExternal(
+                "https://github.com/sharif-geeks/sortwar"
+              )
+            }
           >
-            <MenuIcon />
+            <VscGithubAlt />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.title}>
+          <Typography
+            variant="subtitle1"
+            color="inherit"
+            className={classes.title}
+          >
             Sort War
           </Typography>
           <Space />
@@ -55,7 +75,7 @@ export default function Appbar() {
             aria-label="menu"
             onClick={() => win.minimize()}
           >
-            <MinimizeIcon />
+            <VscChromeMinimize size={18} />
           </IconButton>
           <IconButton
             edge="end"
@@ -64,7 +84,7 @@ export default function Appbar() {
             aria-label="menu"
             onClick={() => win.setFullScreen(!win.isFullScreen())}
           >
-            <Crop54Icon />
+            <VscChromeMaximize size={18} />
           </IconButton>
           <IconButton
             edge="end"
@@ -73,7 +93,7 @@ export default function Appbar() {
             aria-label="menu"
             onClick={() => win.close()}
           >
-            <CloseIcon />
+            <VscChromeClose size={18} />
           </IconButton>
         </Toolbar>
       </AppBar>

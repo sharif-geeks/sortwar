@@ -11,6 +11,7 @@ import {
   langAtom,
   modeAtom,
   snackbarAtom,
+  statsAtom,
   typeAtom
 } from "../recoil/atoms";
 
@@ -28,6 +29,7 @@ export default function useCallers() {
     [lang]
   );
 
+  const setStats = useSetRecoilState(statsAtom)
   const setExecTimes = useSetRecoilState(execTimesAtom)
   const setSnackbar = useSetRecoilState(snackbarAtom)
   const [busy, setBusy] = useState(false)
@@ -85,15 +87,17 @@ export default function useCallers() {
     const getChildStats = () =>
       window.pidusage(child.pid, function (err, stats) {
         console.log(stats);
+        setStats(s => ([...s, stats]))
       });
 
+    setStats([])
     const statsInterval = setInterval(getChildStats, 1000);
 
     child.on("exit", () => {
       console.log("EXITED", child.pid);
       clearInterval(statsInterval);
     });
-  }, [algo, author, count, format, lang, setExecTimes, setSnackbar, type]);
+  }, [algo, author, count, format, lang, setExecTimes, setSnackbar, setStats, type]);
 
   const handleCallReferee = useCallback(() => {
     setBusy(true)

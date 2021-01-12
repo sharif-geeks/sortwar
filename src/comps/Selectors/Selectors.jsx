@@ -11,7 +11,6 @@ import {
   algorithms,
   authors,
   dataTypes,
-  languages,
   modes,
   sortRanges,
 } from "../../config/types";
@@ -65,7 +64,7 @@ function Selectors() {
             {Array.isArray(items)
               ? items.map((item, i) => (
                   <MenuItem value={item} key={"item-" + i}>
-                    {item}
+                    {item.toLocaleString()}
                   </MenuItem>
                 ))
               : Object.keys(items).map((key, i) => (
@@ -85,7 +84,7 @@ export default Selectors;
 const useStyles = makeStyles((theme) => ({
   formControl: {
     flex: 1,
-    margin: 12,
+    margin: 8,
     minWidth: 120,
   },
 }));
@@ -93,6 +92,6 @@ const useStyles = makeStyles((theme) => ({
 const Container = styled.div`
   position: relative;
   display: flex;
-  padding-top: 8px;
+  padding: 12px 4px 4px 4px;
   box-sizing: border-box;
 `;

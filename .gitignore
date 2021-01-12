@@ -32,3 +32,4 @@ yarn-error.log*
 # cache files
 /.vscode
 /.temp
+__pycache__/

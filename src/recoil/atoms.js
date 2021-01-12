@@ -9,5 +9,6 @@ export const algoAtom = atom({ key: "algo", default: algorithms.heap })
 export const authorAtom = atom({ key: "author", default: authors.hayyaun })
 
 export const execTimesAtom = atom({ key: "execTimes", default: {} })
+export const statsAtom = atom({ key: "stats", default: [] })
 
 export const snackbarAtom = atom({ key: "snackbar", default: { message: "", severity: "info" } })
