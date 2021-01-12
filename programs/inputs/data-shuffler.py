@@ -10,14 +10,8 @@ if __name__ == "__main__":
     type = sys.argv[3]
     outDir = sys.argv[4]
 
-    arr = []
-    i = 0
-    while i < stop:
-        num = rnd.randrange(start, stop)
-        if(num not in arr):
-            arr.append(num)
-            i += 1
+    arr = np.arange(stop)
+    np.random.shuffle(arr)
 
-    data = np.asarray(arr)
     np.save(outDir + '\\' +
-            str(stop) + '-' + type + '-shuffle.npy', data)
+            str(stop) + '-' + type + '-shuffle.npy', arr)

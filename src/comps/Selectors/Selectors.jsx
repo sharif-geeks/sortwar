@@ -7,14 +7,8 @@ import {
 } from "@material-ui/core";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import {
-  algorithms,
-  authors,
-  dataTypes,
-  modes,
-  sortRanges,
-} from "../../config/types";
-import { authorHasLangs } from "../../config/vars";
+import { authors, dataTypes, modes, sortRanges } from "../../config/types";
+import { authorHasLangs, modeHasAlgos } from "../../config/vars";
 import {
   algoAtom,
   authorAtom,
@@ -34,8 +28,8 @@ function Selectors() {
 
   const selects = [
     { title: "Author", state: author, items: authors },
-    { title: "Language", state: lang, items: authorHasLangs.hayyaun },
-    { title: "Algorithm", state: algo, items: algorithms },
+    { title: "Language", state: lang, items: authorHasLangs[author[0]] },
+    { title: "Algorithm", state: algo, items: modeHasAlgos[mode[0]] },
     { title: "Count", state: count, items: sortRanges },
     { title: "Data Type", state: type, items: dataTypes },
     { title: "Mode", state: mode, items: modes },
@@ -64,7 +58,7 @@ function Selectors() {
             {Array.isArray(items)
               ? items.map((item, i) => (
                   <MenuItem value={item} key={"item-" + i}>
-                    {item.toLocaleString()}
+                    {typeof item === "number" ? item.toLocaleString() : item}
                   </MenuItem>
                 ))
               : Object.keys(items).map((key, i) => (

@@ -20,6 +20,11 @@ export const authorHasLangs = {
   arman: [languages.go]
 }
 
+export const modeHasAlgos = {
+  normal: [algorithms.default, algorithms.insertion, algorithms.bubble, algorithms.merge, algorithms.heap, algorithms.quick],
+  shuffle: [algorithms.default, algorithms.insertion, algorithms.bubble, algorithms.merge, algorithms.heap, algorithms.quick, algorithms.counting, algorithms.radix]
+}
+
 export const colors = {
   primary: { main: "#8884d8" },
   secondary: { main: "#439d93" }

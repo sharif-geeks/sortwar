@@ -4,17 +4,17 @@ import time
 
 import numpy as np
 
-from bubbleSort import bubbleSort
-from countingSort import countingSort
-from heapSort import heapSort
-from insertionSort import insertionSort
-from mergeSort import mergeSort
-from quickSort import quickSort
-from radixSort import radixSort
+from bubble_sort import bubble_sort
+from count_sort import count_sort
+from heap_sort import heap_sort
+from insertion_sort import insertion_sort
+from merge_sort import merge_sort
+from quick_sort import quick_sort
+from radix_sort import radix_sort
 
 
 # DEFAULT
-def defaultSort(arr):
+def default_sort(arr):
 
     nparr = np.array(arr)
     return np.sort(nparr)
@@ -26,34 +26,34 @@ if __name__ == "__main__":
     algo = sys.argv[1]
     # count = int(sys.argv[2])
     type = sys.argv[3]
-    inFile = sys.argv[4]
-    outFile = sys.argv[5]
+    in_file = sys.argv[4]
+    out_file = sys.argv[5]
 
-    data = np.load(inFile)
+    data = np.load(in_file)
 
-    def saveAndCalcTime(func):
+    def save_calc(func):
         arr = data.tolist()
         start_time = time.time()  # start time
         sorted = func(arr)
         print(int((time.time() - start_time) * 1000))  # end time
-        np.save(outFile, sorted if algo == "default" else np.array(arr))
+        np.save(out_file, sorted if algo == "default" else np.array(arr))
 
-    sortFunction = None
+    sort_func = None
     if(algo == "default"):
-        sortFunction = defaultSort
+        sort_func = default_sort
     elif(algo == "insertion"):
-        sortFunction = insertionSort
+        sort_func = insertion_sort
     elif(algo == "bubble"):
-        sortFunction = bubbleSort
+        sort_func = bubble_sort
     elif(algo == "merge"):
-        sortFunction = mergeSort
+        sort_func = merge_sort
     elif(algo == "quick"):
-        def sortFunction(arr): return quickSort(arr, 0, len(arr) - 1)
+        def sort_func(arr): return quick_sort(arr, 0, len(arr) - 1)
     elif(algo == "heap"):
-        sortFunction = heapSort
+        sort_func = heap_sort
     elif(algo == "counting"):
-        sortFunction = countingSort
+        sort_func = count_sort
     elif(algo == "radix"):
-        sortFunction = radixSort
+        sort_func = radix_sort
 
-    saveAndCalcTime(sortFunction)
+    save_calc(sort_func)
