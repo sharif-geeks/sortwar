@@ -21,10 +21,14 @@ function Overview() {
   const [author] = useRecoilState(authorAtom);
 
   useEffect(() => {
-    const execTimesInit = window.fs.readFileSync(
-      `${wdir}\\outputs\\${author}\\exec-times.json`
-    );
-    setExecTimes(JSON.parse(execTimesInit));
+    try {
+      const execTimesInit = window.fs.readFileSync(
+        `${wdir}\\outputs\\${author}\\exec-times.json`
+      );
+      setExecTimes(JSON.parse(execTimesInit));
+    } catch (e) {
+      console.log(e);
+    }
   }, [author, setExecTimes]);
 
   const data = useMemo(
