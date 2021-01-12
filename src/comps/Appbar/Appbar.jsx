@@ -14,7 +14,7 @@ import {
 import styled from "styled-components";
 
 const { remote } = window.electron;
-var win = remote.BrowserWindow.getFocusedWindow();
+var win = remote.getCurrentWindow();
 
 const useStyles = makeStyles((theme) => ({
   root: {
