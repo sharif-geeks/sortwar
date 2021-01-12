@@ -15,7 +15,13 @@
     "appId": "com.sharifgeeks.sortwar",
     "copyright": "Copyright © 2019 ${author}",
     "compression": "maximum",
-    "extraFiles": [
+    "files": [
+      "build/**/*",
+      "src/electron.js",
+      "src/preload.js",
+      "!**/node_modules/**/*",
+      "node_modules/electron-is-dev/**/*",
+      "node_modules/pidusage/**/*",
       {
         "from": "programs",
         "to": "programs",
@@ -24,14 +30,6 @@
           "!**/*.npy"
         ]
       }
-    ],
-    "files": [
-      "build/**/*",
-      "src/electron.js",
-      "src/preload.js",
-      "!**/node_modules/**/*",
-      "node_modules/electron-is-dev/**/*",
-      "node_modules/pidusage/**/*"
     ],
     "asar": false,
     "directories": {
