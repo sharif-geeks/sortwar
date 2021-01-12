@@ -75,9 +75,13 @@ export default function useCallers() {
 
       if (stdout) {
         // save calc exec time
-        const execTimesInit = window.fs.readFileSync(execTimesFilePath
-        );
-        const execTimesObj = JSON.parse(execTimesInit) || {};
+        let execTimesObj = {};
+        try {
+          const execTimesInit = window.fs.readFileSync(execTimesFilePath);
+          execTimesObj = JSON.parse(execTimesInit);
+        } catch (e) {
+          console.log(e)
+        }
         execTimesObj[`${lang}-${algo}-${count}-${type}-${mode}`] = parseInt(stdout);
         setExecTimes(execTimesObj)
         const execTimesNew = JSON.stringify(execTimesObj);
