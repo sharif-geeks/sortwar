@@ -20,4 +20,4 @@ if __name__ == "__main__":
 
     data = np.asarray(arr)
     np.save(outDir + '\\' + str(start) + '-' +
-            str(stop) + '-' + type + '.npy', data)
+            str(stop) + '-' + type + '-shuffle.npy', data)

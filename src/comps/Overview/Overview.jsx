@@ -11,8 +11,8 @@ import TableTab from "./TableTab";
 
 const tabPanels = [TableTab, GraphTab, SourceTab];
 
-function createData(lang, algo, count, type, time) {
-  return { lang, algo, count, type, time };
+function createData(lang, algo, count, type, mode, time) {
+  return { lang, algo, count, type, mode, time };
 }
 
 function Overview() {

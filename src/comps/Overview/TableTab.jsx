@@ -12,6 +12,7 @@ const cols = [
     valueFormatter: ({ value: v }) => parseInt(v).toLocaleString(),
   },
   { field: "type", headerName: "Data Type", width: 130 },
+  { field: "mode", headerName: "Mode", width: 130 },
   {
     field: "time",
     headerName: "Execution Time (ms)",
@@ -28,8 +29,6 @@ function TableTab({ data }) {
     <StyledDataGrid
       rows={rows}
       columns={cols}
-      //pageSize={6}
-      pagination={false}
       hideFooterPagination
     />
   );

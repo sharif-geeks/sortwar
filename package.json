@@ -38,7 +38,7 @@
     "test:react": "node scripts/test.js",
     "start:electron": "wait-on http://localhost:3000 && cross-env ELECTRON_START_URL=http://localhost:3000 electron .",
     "start": "concurrently \"cross-env BROWSER=none npm run start:react\" \"npm run start:electron\"",
-    "build": "npm run build:react && electron-builder",
+    "build": "npm run build:react && npm run dist",
     "release": "npm run build:react && electron-builder --publish=always",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"

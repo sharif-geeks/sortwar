@@ -7,10 +7,10 @@ export const callDataGen = ({ count, type, mode, start, end }) => mode === modes
   file: 'python', args: [`${wdir}\\inputs\\data-shuffler.py`, start, end, type, `${wdir}\\inputs\\`]
 })
 
-export const callProgram = ({ author, lang, format, algo, count, type }) => {
+export const callProgram = ({ author, lang, format, algo, count, type, mode }) => {
   const appName = `${wdir}\\${author}-${lang}\\${author}-${lang}.${format}`
-  const inputFile = `${wdir}\\inputs\\${count}-${type}.npy`
-  const outputFile = `${wdir}\\outputs\\${author}\\${lang}-${algo}-${count}-${type}.npy`
+  const inputFile = `${wdir}\\inputs\\${count}-${type}-${mode}.npy`
+  const outputFile = `${wdir}\\outputs\\${author}\\${lang}-${algo}-${count}-${type}-${mode}.npy`
 
   return ({
     file: lang === languages.python ? "python" : appName,
@@ -18,6 +18,6 @@ export const callProgram = ({ author, lang, format, algo, count, type }) => {
   })
 }
 
-export const callReferee = ({ author, lang, algo, count, type }) => ({
-  file: 'python', args: [`${wdir}\\outputs\\referee.py`, `${wdir}\\outputs\\${author}\\${lang}-${algo}-${count}-${type}.npy`]
+export const callReferee = ({ author, lang, algo, count, type, mode }) => ({
+  file: 'python', args: [`${wdir}\\outputs\\referee.py`, `${wdir}\\outputs\\${author}\\${lang}-${algo}-${count}-${type}-${mode}.npy`]
 })

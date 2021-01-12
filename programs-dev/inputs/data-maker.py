@@ -34,4 +34,4 @@ if __name__ == "__main__":
             arr.append(rndstr.encode('utf-8'))
         data = np.array(arr)
 
-    np.save(outDir + '\\' + str(count) + '-' + type + '.npy', data)
+    np.save(outDir + '\\' + str(count) + '-' + type + '-normal.npy', data)

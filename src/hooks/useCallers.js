@@ -34,6 +34,11 @@ export default function useCallers() {
   const setSnackbar = useSetRecoilState(snackbarAtom)
   const [busy, setBusy] = useState(false)
 
+  /**
+   * 
+   * handleCallDataGen
+   * 
+   */
   const handleCallDataGen = useCallback(() => {
     setBusy(true)
     const { file, args } = callDataGen({ count, type, mode });
@@ -52,9 +57,14 @@ export default function useCallers() {
     });
   }, [count, mode, setSnackbar, type]);
 
+  /**
+   * 
+   * handleCallProgram
+   * 
+   */
   const handleCallProgram = useCallback(() => {
     setBusy(true)
-    const { file, args } = callProgram({ author, lang, format, algo, count, type });
+    const { file, args } = callProgram({ author, lang, format, algo, count, type, mode });
 
     const child = execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
@@ -66,8 +76,8 @@ export default function useCallers() {
         const execTimesInit = window.fs.readFileSync(
           `${wdir}\\outputs\\${author}\\exec-times.json`
         );
-        const execTimesObj = JSON.parse(execTimesInit);
-        execTimesObj[`${lang}-${algo}-${count}-${type}`] = parseInt(stdout);
+        const execTimesObj = JSON.parse(execTimesInit) || {};
+        execTimesObj[`${lang}-${algo}-${count}-${type}-${mode}`] = parseInt(stdout);
         setExecTimes(execTimesObj)
         const execTimesNew = JSON.stringify(execTimesObj);
         window.fs.writeFileSync(
@@ -97,11 +107,16 @@ export default function useCallers() {
       console.log("EXITED", child.pid);
       clearInterval(statsInterval);
     });
-  }, [algo, author, count, format, lang, setExecTimes, setSnackbar, setStats, type]);
+  }, [algo, author, count, format, lang, mode, setExecTimes, setSnackbar, setStats, type]);
 
+  /**
+   * 
+   * handleCallReferee
+   * 
+   */
   const handleCallReferee = useCallback(() => {
     setBusy(true)
-    const { file, args } = callReferee({ author, lang, algo, count, type });
+    const { file, args } = callReferee({ author, lang, algo, count, type, mode });
 
     execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
@@ -117,7 +132,7 @@ export default function useCallers() {
 
       setBusy(false)
     });
-  }, [algo, author, count, lang, setSnackbar, type]);
+  }, [algo, author, count, lang, mode, setSnackbar, type]);
 
   return { handleCallDataGen, handleCallProgram, handleCallReferee, busy }
 }
