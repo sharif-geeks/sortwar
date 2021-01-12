@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, { useMemo } from "react";
 import "react-icons/vsc";
 import {
   VscChromeClose,
@@ -11,7 +11,9 @@ import {
   VscChromeMinimize,
   VscGithubAlt,
 } from "react-icons/vsc";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { statsAtom } from "../../recoil/atoms";
 
 const { remote } = window.electron;
 var win = remote.getCurrentWindow();
@@ -35,13 +37,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   title: {
-    margin: 0,
-    marginLeft: theme.spacing(2),
+    margin: "0 12px",
   },
 }));
 
 export default function Appbar() {
   const classes = useStyles();
+
+  const [stats] = useRecoilState(statsAtom);
+  const elapsed = useMemo(() => stats[stats.length - 1]?.elapsed / 1000 || 0, [
+    stats,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -66,6 +72,13 @@ export default function Appbar() {
             className={classes.title}
           >
             Sort War
+          </Typography>
+          <Space />
+          <Typography variant="subtitle2" style={{ color: "#fff9" }}>
+            {!!elapsed &&
+              String(parseInt(elapsed / 60)).padStart(2, "0") +
+                " : " +
+                String(parseInt(elapsed % 60)).padStart(2, "0")}
           </Typography>
           <Space />
           <IconButton

@@ -7,7 +7,7 @@ rnd.seed(1)
 if __name__ == "__main__":
     start = int(sys.argv[1])
     stop = int(sys.argv[2])
-    type = sys.argv[3] or "integer"
+    type = sys.argv[3]
     outDir = sys.argv[4]
 
     arr = []
@@ -19,5 +19,5 @@ if __name__ == "__main__":
             i += 1
 
     data = np.asarray(arr)
-    np.save(outDir + '\\' + str(start) + '-' +
+    np.save(outDir + '\\' +
             str(stop) + '-' + type + '-shuffle.npy', data)

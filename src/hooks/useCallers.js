@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { callDataGen, callProgram, callReferee } from "../config/functions";
-import { authors, formats, languages } from "../config/types";
+import { formats, languages } from "../config/types";
 import { wdir } from "../config/vars";
 import {
   algoAtom,
@@ -33,6 +33,8 @@ export default function useCallers() {
   const setExecTimes = useSetRecoilState(execTimesAtom)
   const setSnackbar = useSetRecoilState(snackbarAtom)
   const [busy, setBusy] = useState(false)
+
+  const execTimesFilePath = useMemo(() => `${wdir}\\outputs\\${author}\\exec-times.json`, [author]);
 
   /**
    * 
@@ -73,15 +75,14 @@ export default function useCallers() {
 
       if (stdout) {
         // save calc exec time
-        const execTimesInit = window.fs.readFileSync(
-          `${wdir}\\outputs\\${author}\\exec-times.json`
+        const execTimesInit = window.fs.readFileSync(execTimesFilePath
         );
         const execTimesObj = JSON.parse(execTimesInit) || {};
         execTimesObj[`${lang}-${algo}-${count}-${type}-${mode}`] = parseInt(stdout);
         setExecTimes(execTimesObj)
         const execTimesNew = JSON.stringify(execTimesObj);
         window.fs.writeFileSync(
-          `${wdir}\\outputs\\${authors.hayyaun}\\exec-times.json`,
+          execTimesFilePath,
           execTimesNew
         );
       }
@@ -107,7 +108,7 @@ export default function useCallers() {
       console.log("EXITED", child.pid);
       clearInterval(statsInterval);
     });
-  }, [algo, author, count, format, lang, mode, setExecTimes, setSnackbar, setStats, type]);
+  }, [algo, author, count, execTimesFilePath, format, lang, mode, setExecTimes, setSnackbar, setStats, type]);
 
   /**
    * 
