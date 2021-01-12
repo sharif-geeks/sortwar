@@ -16,7 +16,14 @@
     "copyright": "Copyright © 2019 ${author}",
     "compression": "maximum",
     "extraFiles": [
-      "programs/**/*"
+      {
+        "from": "programs",
+        "to": "programs",
+        "filter": [
+          "**/*",
+          "!**/*.npy"
+        ]
+      }
     ],
     "files": [
       "build/**/*",
