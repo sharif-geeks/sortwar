@@ -23,11 +23,13 @@ export const languages = {
 
 export const algorithms = {
   default: "default",
-  bubble: "bubble",
   insertion: "insertion",
+  bubble: "bubble",
+  merge: "merge",
   heap: "heap",
   quick: "quick",
-  merge: "merge",
+  counting: "counting",
+  radix: "radix",
 }
 
 export const authors = {

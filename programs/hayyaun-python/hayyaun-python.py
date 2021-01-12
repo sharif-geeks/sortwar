@@ -1,12 +1,16 @@
-import sys
 import string
-import numpy as np
+import sys
 import time
-from insertionSort import insertionSort
+
+import numpy as np
+
 from bubbleSort import bubbleSort
+from countingSort import countingSort
+from heapSort import heapSort
+from insertionSort import insertionSort
 from mergeSort import mergeSort
 from quickSort import quickSort
-from heapSort import heapSort
+from radixSort import radixSort
 
 
 # DEFAULT
@@ -47,5 +51,9 @@ if __name__ == "__main__":
         def sortFunction(arr): return quickSort(arr, 0, len(arr) - 1)
     elif(algo == "heap"):
         sortFunction = heapSort
+    elif(algo == "counting"):
+        sortFunction = countingSort
+    elif(algo == "radix"):
+        sortFunction = radixSort
 
     saveAndCalcTime(sortFunction)
