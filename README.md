@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Add your own programs
 
-### ***important***  Your program must accept the following list of arguments from commandline:
+### **Important:** Your program must accept the following list of arguments from commandline:
 - **algorithm** *default | insertion | bubble | merge | heap | quick | counting | radix*
 - **count** *[number]*
 - **type** *integer | double | string*
