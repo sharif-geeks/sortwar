@@ -15,6 +15,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **type** *integer | double | string*
 - **input_file_path**
 - **output_file_path**
+> You can print total execution time in order to test benchmarks.
 
 ### Follow these steps to add your program:
 
