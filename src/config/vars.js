@@ -2,6 +2,9 @@ import { algorithms, languages } from "./types";
 
 const app = window.electron.remote.app;
 export const wdir = `${app.getAppPath()}\\programs\\`;
+export const inputsPath = `${wdir}\\inputs`;
+export const outputsPath = `${wdir}\\outputs`;
+
 
 export const authorHasLangs = {
   hayyaun: [languages.python, languages.cs],

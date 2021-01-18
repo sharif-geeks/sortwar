@@ -34,7 +34,13 @@ export default function useCallers() {
   const setSnackbar = useSetRecoilState(snackbarAtom)
   const [busy, setBusy] = useState(false)
 
-  const execTimesFilePath = useMemo(() => `${wdir}\\outputs\\${author}\\exec-times.json`, [author]);
+  const { execTimesFolderPath, execTimesFilePath } = useMemo(() => {
+    const fpath = `${wdir}\\outputs\\${author}`
+    return {
+      execTimesFolderPath: fpath,
+      execTimesFilePath: `${fpath}\\exec-times.json`
+    }
+  }, [author]);
 
   /**
    * 
@@ -64,9 +70,12 @@ export default function useCallers() {
    * handleCallProgram
    * 
    */
-  const handleCallProgram = useCallback(() => {
+  const handleCallProgram = useCallback(async () => {
     setBusy(true)
     const { file, args } = callProgram({ author, lang, format, algo, count, type, mode });
+
+    if (!await window.fs.existsSync(execTimesFolderPath))
+      await window.fs.mkdir(execTimesFolderPath, console.log);
 
     const child = execFile(file, args, (error, stdout, stderr) => {
       if (error) console.error(`exec error: ${error}`);
@@ -75,20 +84,15 @@ export default function useCallers() {
 
       if (stdout) {
         // save calc exec time
-        let execTimesObj = {};
-        try {
-          const execTimesInit = window.fs.readFileSync(execTimesFilePath);
-          execTimesObj = JSON.parse(execTimesInit);
-        } catch (e) {
-          console.log(e)
-        }
-        execTimesObj[`${lang}-${algo}-${count}-${type}-${mode}`] = parseInt(stdout);
-        setExecTimes(execTimesObj)
-        const execTimesNew = JSON.stringify(execTimesObj);
-        window.fs.writeFileSync(
-          execTimesFilePath,
-          execTimesNew
-        );
+        window.fs.readFile(execTimesFilePath, (err, data) => {
+          if (err) console.log(err)
+          let execTimesObj = data ? JSON.parse(data) : {};
+          execTimesObj[`${lang}-${algo}-${count}-${type}-${mode}`] = parseInt(stdout);
+          setExecTimes(execTimesObj)
+          const execTimes = JSON.stringify(execTimesObj);
+          window.fs.writeFile(execTimesFilePath, execTimes, console.log);
+        });
+
       }
 
       if (!error) {
@@ -112,7 +116,7 @@ export default function useCallers() {
       console.log("EXITED", child.pid);
       clearInterval(statsInterval);
     });
-  }, [algo, author, count, execTimesFilePath, format, lang, mode, setExecTimes, setSnackbar, setStats, type]);
+  }, [algo, author, count, execTimesFilePath, execTimesFolderPath, format, lang, mode, setExecTimes, setSnackbar, setStats, type]);
 
   /**
    * 

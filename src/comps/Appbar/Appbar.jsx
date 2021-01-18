@@ -3,17 +3,19 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import "react-icons/vsc";
 import {
   VscChromeClose,
   VscChromeMaximize,
   VscChromeMinimize,
   VscGithubAlt,
+  VscTrash,
 } from "react-icons/vsc";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { statsAtom } from "../../recoil/atoms";
+import { authorAtom, execTimesAtom, statsAtom } from "../../recoil/atoms";
+import { wdir } from "../../config/vars";
 
 const { remote } = window.electron;
 var win = remote.getCurrentWindow();
@@ -49,6 +51,18 @@ export default function Appbar() {
     stats,
   ]);
 
+  const [author] = useRecoilState(authorAtom);
+  const execTimesFilePath = useMemo(
+    () => `${wdir}\\outputs\\${author}\\exec-times.json`,
+    [author]
+  );
+  const setExecTimes = useSetRecoilState(execTimesAtom);
+  const clearCache = useCallback(() => {
+    localStorage.clear();
+    window.fs.writeFileSync(execTimesFilePath, JSON.stringify({}));
+    setExecTimes({});
+  }, [execTimesFilePath, setExecTimes]);
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appbar}>
@@ -81,6 +95,15 @@ export default function Appbar() {
                 String(parseInt(elapsed % 60)).padStart(2, "0")}
           </Typography>
           <Space />
+          <IconButton
+            edge="end"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={clearCache}
+          >
+            <VscTrash size={18} />
+          </IconButton>
           <IconButton
             edge="end"
             className={classes.menuButton}

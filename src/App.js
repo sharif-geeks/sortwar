@@ -5,6 +5,9 @@ import CustomSnackbar from './comps/CustomSnackbar'
 import Appbar from "./comps/Appbar/Appbar";
 import styled from "styled-components";
 import { colors } from "./config/vars";
+import recoilPersist from 'recoil-persist'
+
+const { RecoilPersist, updateState } = recoilPersist()
 
 const theme = createMuiTheme({
   typography: {
@@ -27,7 +30,8 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <RecoilRoot>
+    <RecoilRoot initializeState={updateState}>
+      <RecoilPersist />
       <ThemeProvider theme={theme}>
         <Container>
           <Appbar />

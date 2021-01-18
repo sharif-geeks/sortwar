@@ -5,7 +5,6 @@ const url = require('url')
 const isDev = require('electron-is-dev');
 
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -14,15 +13,13 @@ function createWindow() {
       nodeintegration: true,
       enableRemoteModule: true,
       webSecurity: false,
-      devTools: isDev
+      devTools: true
     },
     darkTheme: true,
     titleBarStyle: "hidden",
     frame: isDev,
   })
 
-  // and load the index.html of the app.
-  // mainWindow.loadFile('index.html')
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
     protocol: 'file:',
@@ -30,8 +27,7 @@ function createWindow() {
   });
   mainWindow.loadURL(startUrl);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished

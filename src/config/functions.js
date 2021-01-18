@@ -1,8 +1,5 @@
 import { languages, modes } from "./types"
-import { wdir } from "./vars"
-
-const inputsPath = `${wdir}\\inputs`;
-const outputsPath = `${wdir}\\outputs`;
+import { inputsPath, outputsPath, wdir } from "./vars"
 
 export const callDataGen = ({ count, type, mode }) => mode === modes.normal ? ({
   file: 'python', args: [`${inputsPath}\\data-maker.py`, count, type, inputsPath]
