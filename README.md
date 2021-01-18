@@ -23,3 +23,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 3. Add languages of yours to `authorHasLangs` object in `src/config/vars.js`.
 
 > Auto-dectect would be added in future so that you don't need to add these manually.
+
+## Build Application
+
+### `npm run build` to build react-app and electron-packger with windows-installer.
+### `npm run release` to build release.
